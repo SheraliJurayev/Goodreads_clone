@@ -7,21 +7,28 @@
     <title>Register page</title>
 </head>
 <body>
-    <form action="">
+    <h1>Register page</h1>
+
+    <form method="post" action="{% url 'users:register_page' %}">
+
+        {% csrf_token %}
+
         <label for="username">Username</label>
-        <input id="username" type="text" name="username">
+        <input id="username" type="text" name="username"> <br> <br>
 
         <label for="first_name">First name</label>
-        <input id="first_name" type="text" name="first_name">
+        <input id="first_name" type="text" name="first_name"> <br> <br>
 
         <label for="last_name">Last name</label>
-        <input id="last_name" type="text" name="last_name">
+        <input id="last_name" type="text" name="last_name"> <br> <br>
 
         <label for="email">Email</label>
-        <input id="email" type="email" name="email">
+        <input id="email" type="email" name="email"> <br> <br>
 
         <label for="password">Password</label>
-        <input id="password" type="password" name="password">
+        <input id="password" type="password" name="password"> <br> <br>
+
+        <button type="submit">Submit</button>
 
     </form>
 </body>
