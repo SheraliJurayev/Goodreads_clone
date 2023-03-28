@@ -13,20 +13,7 @@
 
         {% csrf_token %}
 
-        <label for="username">Username</label>
-        <input id="username" type="text" name="username"> <br> <br>
-
-        <label for="first_name">First name</label>
-        <input id="first_name" type="text" name="first_name"> <br> <br>
-
-        <label for="last_name">Last name</label>
-        <input id="last_name" type="text" name="last_name"> <br> <br>
-
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email"> <br> <br>
-
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password"> <br> <br>
+        {{form.as_p}}
 
         <button type="submit">Submit</button>
 
