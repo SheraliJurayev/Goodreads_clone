@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from users.forms import UserCreateForm
 # Create your views here.
 
+print()
 class RegisterView(View):
     def get(self, request):
 
@@ -17,24 +18,8 @@ class RegisterView(View):
         create_form = UserCreateForm(data=request.POST)
 
         if create_form.is_valid():
-            username = request.POST['username']
-            firstname = request.POST['first_name']
-            last_name = request.POST['last_name']    
-            email = request.POST['email'] 
-            password = request.POST['password']
-
-            user = User.objects.get(
-                username=username ,
-                firstname=firstname ,
-                last_name=last_name , 
-                email=email,
-                password=password
-            )
-            user.set_password(password)
-            user.save() 
-
-            return redirect('users:login_page')
-    
+            create_form.save()
+            return ('users:login_page')
         else:
             context = {
             'form': create_form
