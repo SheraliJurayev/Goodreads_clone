@@ -1,6 +1,7 @@
 from audioop import reverse
 from django.test import TestCase 
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user
 
 class RegistertarionTestCase(TestCase):
     def test_user_accaunt_is_ctrated(self):
@@ -81,3 +82,42 @@ class LoginTestCase(TestCase):
         db_user = User.objects.create(username= 'Sh_Jurayeff' , first_name= 'Sherali')
         db_user.set_password('Sony1122')
         db_user.save()
+
+        self.client.post(
+            reverse('users:login') , 
+            data={
+            'username': 'Sh_Jurayeff' , 
+            'password': 'Sony1122'
+                }   
+        )
+
+        user = get_user(self.client)
+        self.assertTrue(user.is_authenticated)
+
+    def test_wrong_username(self):
+        db_user = User.objects.create(username= 'Sh_Jurayeff' , first_name= 'Sherali')
+        db_user.set_password('Sony1122')
+        db_user.save()
+
+        self.client.post(
+            reverse('users:login') , 
+            data={
+            'username': 'wrong-username' , 
+            'password': 'Sony1122'
+                }   
+        ) 
+
+        user = get_user(self.client)
+        self.assertFalse(user.is_authenticated)
+
+        self.client.post(
+            reverse('users:login') , 
+            data={
+            'username': 'Sh_Jurayeff' , 
+            'password': 'wrong-password'
+                }   
+        ) 
+
+        user = get_user(self.client)    
+        self.assertFalse(user.is_authenticated)
+
