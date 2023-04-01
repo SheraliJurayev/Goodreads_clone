@@ -1,5 +1,5 @@
 from audioop import reverse
-from django.test import TestCase
+from django.test import TestCase 
 from django.contrib.auth.models import User
 
 class RegistertarionTestCase(TestCase):
@@ -39,9 +39,9 @@ class RegistertarionTestCase(TestCase):
         self.assertFormError(response , 'form' , 'password' , 'This field is required.')
 
     def test_invalid_email(self):
-        self.client.post(
+        response = self.client.post(
             reverse('users:register_page') , 
-             data={
+            data={
             'username': 'Sh_Jurayeff' , 
             'first_name': 'Sherali' , 
             'last_name': 'Jurayev' , 
@@ -49,6 +49,31 @@ class RegistertarionTestCase(TestCase):
             'password': 'Sony1122'
                 }
                         )
-            
+        user_count = User.objects.count()
+
+        self.assertEqual(user_count, 0 )
+        self.asserFormError(response , 'from' , 'email' , 'Enter a valid email address.')
+
+
+    def test_unique_username(self):
+        user = User.objects.create(username= 'Sh_Jurayeff' , first_name= 'Sherali')
+        user.set_password('Sony1122')
+        user.save()
+
+        response = self.client.post(
+            reverse('users:register') , 
+            data={
+            'username': 'Sh_Jurayeff' , 
+            'first_name': 'Sherali' , 
+            'last_name': 'Jurayev' , 
+            'email': 'Invalid-email' , 
+            'password': 'Sony1122'
+                }   
+        )
+
+        user_accout = User.objects.count()
+        self.assertEqual(user_accout , 1)
+
+        self.assertFormError(response , 'form' , 'username', 'A user with that username already exists.')
 
 
