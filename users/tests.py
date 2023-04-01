@@ -73,7 +73,6 @@ class RegistertarionTestCase(TestCase):
 
         user_accout = User.objects.count()
         self.assertEqual(user_accout , 1)
-
         self.assertFormError(response , 'form' , 'username', 'A user with that username already exists.')
 
 
