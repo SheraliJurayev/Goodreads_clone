@@ -1,3 +1,8 @@
+from django.urls import reverse
 from django.test import TestCase
 
-# Create your tests here.
+class BooksTestCase(TestCase):
+    def test_no_books(self):
+        response = self.client.get(reverse('books:list'))
+
+        self.assertContains(response , 'No books found.')
