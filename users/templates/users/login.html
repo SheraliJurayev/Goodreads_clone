@@ -8,5 +8,14 @@
 </head>
 <body>
     <h1>Login page</h1>
+    <p>
+        <form method="post">
+            {% csrf_token %}        
+            {{login_form.as_p}}
+            <button type="submit">Log In</button>
+        </form>
+    </p>
+    
+    
 </body>
 </html>

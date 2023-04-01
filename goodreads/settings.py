@@ -50,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'goodreads.middleware.SimpleMiddleware' , 
 ]
 
 ROOT_URLCONF = 'goodreads.urls'

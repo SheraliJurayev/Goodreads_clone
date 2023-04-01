@@ -76,3 +76,8 @@ class RegistertarionTestCase(TestCase):
         self.assertFormError(response , 'form' , 'username', 'A user with that username already exists.')
 
 
+class LoginTestCase(TestCase):
+    def test_successfull_login(self):
+        db_user = User.objects.create(username= 'Sh_Jurayeff' , first_name= 'Sherali')
+        db_user.set_password('Sony1122')
+        db_user.save()
