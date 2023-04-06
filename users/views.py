@@ -45,7 +45,12 @@ class LoginView(View):
         else:
             return render(request, 'users/login.html', {'login_form':login_form})
           
-    
+class ProfileView(View):
+    def get(self, request):
+        context = {
+            'user': request.user 
+        }        
+        return render(request, 'users/profile.html' , context)    
 
     
 
