@@ -53,7 +53,7 @@ class RegistertarionTestCase(TestCase):
         user_count = User.objects.count()
 
         self.assertEqual(user_count, 0 )
-        self.asserFormError(response , 'from' , 'email' , 'Enter a valid email address.')
+        self.assertFormError(response , 'form' , 'email' , 'Enter a valid email address.')
 
 
     def test_unique_username(self):
@@ -62,7 +62,7 @@ class RegistertarionTestCase(TestCase):
         user.save()
 
         response = self.client.post(
-            reverse('users:register') , 
+            reverse('users:register_page') , 
             data={
             'username': 'Sh_Jurayeff' , 
             'first_name': 'Sherali' , 
@@ -84,7 +84,7 @@ class LoginTestCase(TestCase):
         db_user.save()
 
         self.client.post(
-            reverse('users:login') , 
+            reverse('users:login_page') , 
             data={
             'username': 'Sh_Jurayeff' , 
             'password': 'Sony1122'
@@ -100,7 +100,7 @@ class LoginTestCase(TestCase):
         db_user.save()
 
         self.client.post(
-            reverse('users:login') , 
+            reverse('users:login_page') , 
             data={
             'username': 'wrong-username' , 
             'password': 'Sony1122'
@@ -111,7 +111,7 @@ class LoginTestCase(TestCase):
         self.assertFalse(user.is_authenticated)
 
         self.client.post(
-            reverse('users:login') , 
+            reverse('users:login_page') , 
             data={
             'username': 'Sh_Jurayeff' , 
             'password': 'wrong-password'
@@ -121,3 +121,11 @@ class LoginTestCase(TestCase):
         user = get_user(self.client)    
         self.assertFalse(user.is_authenticated)
 
+
+
+class ProfileTestCase(TestCase):
+    def test_login_required(self):
+        response = self.client.get(reverse("users:profile_page") + '?next=/users/profile/')
+
+        self.assertEqual(response.status_code,302)
+        self.assertEqual(response.url, reverse("users:login_page"))

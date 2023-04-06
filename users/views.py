@@ -3,6 +3,7 @@ from django.views import View
 from users.forms import UserCreateForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class RegisterView(View):
     def get(self, request):
@@ -45,11 +46,11 @@ class LoginView(View):
         else:
             return render(request, 'users/login.html', {'login_form':login_form})
           
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin ,View):
     def get(self, request):
         context = {
             'user': request.user 
-        }        
+                  }        
         return render(request, 'users/profile.html' , context)    
 
     
